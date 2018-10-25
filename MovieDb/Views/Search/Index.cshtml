@@ -3,8 +3,37 @@
     <title>MovieDb App</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.min.js"></script>
-    <script src="~/App.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="~/MovieDbApp/App.js"></script>
+    
+
 </head>
-<div class="container-fluid" ng-app="App" ng-controller="MovieCtrl">
+<div class="container-fluid" ng-app="App" ng-controller="SearchCtrl as SCtrl">
     <h4>MovieDb App</h4>
+    <div class="row">
+        <div class="mb-3 input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Movie Search</span>
+            </div>
+
+            <div class="input-group-addon">
+                <input type="text" class="form-control" placeholder="Enter search text here" ng-model="SCtrl.searchTerm" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary input-group-button" ng-click="SCtrl.buttonTest()">SEARCH</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-repeat="movie in SCtrl.searchResult" class="col-md-2" style="margin:25px;">
+            <div class="row">
+                <span style="text-align:center;">{{movie.title}}</span>
+            </div>
+            <div class="row">
+                <img ng-src="{{SCtrl.posterBasePath + movie.poster_path}}" />
+            </div>
+        </div>
+    </div>
 </div>
