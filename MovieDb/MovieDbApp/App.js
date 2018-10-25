@@ -25,11 +25,15 @@
         self.numResults = 10;
         self.posterBasePath = "https://image.tmdb.org/t/p/w185";
         self.searchTerm = "";
-        self.buttonTest = function () {
+        self.searchMovie = function () {
             $http.get('/api/Movie/SearchMovie?searchTerm=' + self.searchTerm).then(function (data) {
                 self.searchResult = data.data[0].results;
                 self.searchResult = self.searchResult.slice(0, self.numResults);
             });
         };
+        self.init = function () {
+            self.searchMovie();
+        }
+        self.init();
     });
 })();

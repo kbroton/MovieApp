@@ -5,34 +5,62 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/ui-bootstrap-2.5.0.min.js"></script>
     <link href="~/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="~/MovieDbApp/App.js"></script>
     
 
 </head>
+<style>
+    body {
+        background: #ebedf3;
+    }
+    .movie-group {
+        height: 375px;
+        width: 100%;
+        max-width: 225px;
+        box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        display: inline-block;
+        background: #FFFFFF;
+    }
+
+    .movie-group:hover {
+        -webkit-transform: scale(1.02);
+        transform: scale(1.02);
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    }
+</style>
 <div class="container-fluid" ng-app="App" ng-controller="SearchCtrl as SCtrl">
-    <h4>MovieDb App</h4>
+    <h3 style="text-align:center;">Kelly's MovieDb App</h3>
     <div class="row">
-        <div class="mb-3 input-group">
+        <div class="mb-3 input-group d-flex justify-content-center" style="margin-left:25px;">
             <div class="input-group-prepend">
                 <span class="input-group-text">Movie Search</span>
             </div>
 
             <div class="input-group-addon">
-                <input type="text" class="form-control" placeholder="Enter search text here" ng-model="SCtrl.searchTerm" aria-describedby="basic-addon3">
+                <input type="text" class="form-control" placeholder="Enter search text here" ng-model="SCtrl.searchTerm" aria-describedby="basic-addon3" style="border-radius: 0px; width:400px;">
             </div>
             <div class="input-group-append">
-                <button type="button" class="btn btn-primary input-group-button" ng-click="SCtrl.buttonTest()">SEARCH</button>
+                <button type="button" class="btn btn-primary input-group-button" ng-click="SCtrl.searchMovie()">SEARCH</button>
             </div>
         </div>
     </div>
     <div class="row">
-        <div ng-repeat="movie in SCtrl.searchResult" class="col-md-2" style="margin:25px;">
-            <div class="row">
-                <span style="text-align:center;">{{movie.title}}</span>
-            </div>
-            <div class="row">
-                <img ng-src="{{SCtrl.posterBasePath + movie.poster_path}}" />
+        <div ng-if="SCtrl.searchResult.length === 0">No results found.</div>
+    </div>
+    <div class="row">
+        <div ng-repeat="movie in SCtrl.searchResult" class="col-md movie-group" style="margin:25px;">
+            <div style="text-align:center; vertical-align: middle; height: 48px;">{{movie.title}}</div>
+            <img style="margin-top:5px;" class="rounded mx-auto d-block" ng-if="movie.poster_path" ng-src="{{SCtrl.posterBasePath + movie.poster_path}}"/>
+            <div ng-if="!movie.poster_path" style="margin-bottom:120px; margin-top:125px; text-align:center;">No image found</div>
+            <div class="mb-3 input-group" style="margin-top:5px; max-height:32px;">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" style="font-size:12px; max-width: 90px;">Release Date</div>
+                </div>
+                
+                <span class="form-control" style="font-size:12px;">{{movie.release_date?movie.release_date: 'N/A'}}</span>
             </div>
         </div>
     </div>
