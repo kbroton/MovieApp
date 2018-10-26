@@ -8,12 +8,9 @@ namespace MovieDb.Controllers
 {
     public class SearchController : Controller
     {
-        // GET: Search
         public ActionResult Index()
         {
             return View();
         }
-
-        
     }
 }

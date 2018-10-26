@@ -16,6 +16,7 @@ namespace MovieDb.Controllers
         private MovieLogic _movieLogic;
         public MovieController()
         {
+            // create a logic class when the controller is initalized
             _movieLogic = new MovieLogic();
         }
 
