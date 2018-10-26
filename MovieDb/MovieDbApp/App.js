@@ -15,7 +15,6 @@
     {
         // Variables
         var self = this;
-        self.test = "hello world";
         self.searchResult = [];
         self.numResults = 10;
         self.posterBasePath = "https://image.tmdb.org/t/p/w185";
