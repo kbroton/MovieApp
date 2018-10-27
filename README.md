@@ -1,5 +1,6 @@
 # MovieApp
 A small single page web application that utilizes https://www.themoviedb.org API.
+![Screenshot Preview](https://i.gyazo.com/b9ee9feac2cb1393a6fd6ca6e834b567.jpg)
 
 ### Built With
 - C# - Web App Framework and API
