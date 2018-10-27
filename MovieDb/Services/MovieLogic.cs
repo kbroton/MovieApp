@@ -20,7 +20,7 @@ namespace MovieDb.Services
         /// </summary>
         /// <param name="searchTerm">query string for DB</param>
         /// <returns>List of movie search query objects</returns>
-        public List<SearchQuery> SearchMovie(string searchTerm)
+        public IRestResponse<List<SearchQuery>> SearchMovie(string searchTerm = null)
         {
             RestClient client;
 
@@ -34,7 +34,7 @@ namespace MovieDb.Services
             client.AddHandler("application/json", new JsonDeserializer());
 
             var result = client.Execute<List<SearchQuery>>(new RestRequest());
-            return result.Data;
+            return result;
         }
     }
 }

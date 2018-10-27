@@ -28,6 +28,13 @@
         transform: scale(1.02);
         box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
     }
+
+    .img-not-found {
+        margin-bottom: 127px; 
+        margin-top: 135px; 
+        min-width: 185px; 
+        text-align: center;
+    }
 </style>
 <div class="container-fluid" ng-app="App" ng-controller="SearchCtrl as SCtrl">
     <h3 style="text-align:center;">Kelly's MovieDb App</h3>
@@ -36,12 +43,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Movie Search</span>
             </div>
-
             <div class="input-group-addon">
-                <input type="text" class="form-control" placeholder="Enter search text here" ng-model="SCtrl.searchTerm" aria-describedby="basic-addon3" style="border-radius: 0px; width:400px;">
+                <input autofocus type="text" class="form-control" 
+                       ng-keyup="$event.keyCode === 13 &&  SCtrl.searchMovie()" 
+                       placeholder="Enter search text here" ng-model="SCtrl.searchTerm" 
+                       style="border-radius: 0px; width:400px;">
             </div>
             <div class="input-group-append">
-                <button type="button" class="btn btn-primary input-group-button" ng-click="SCtrl.searchMovie()">SEARCH</button>
+                <button type="button"  class="btn btn-primary input-group-button" ng-click="SCtrl.searchMovie()">SEARCH</button>
             </div>
         </div>
     </div>
@@ -51,14 +60,14 @@
     <div class="row">
         <div ng-repeat="movie in SCtrl.searchResult" class="col-md movie-group" style="margin:25px;">
             <div style="text-align:center; vertical-align: middle; height: 48px;">{{movie.title}}</div>
-            <img style="margin-top:5px;" class="rounded mx-auto d-block" ng-if="movie.poster_path" ng-src="{{SCtrl.posterBasePath + movie.poster_path}}"/>
-            <div ng-if="!movie.poster_path" style="margin-bottom:120px; margin-top:125px; text-align:center;">No image found</div>
+            <img style="margin-top:5px; height:278px;" class="rounded mx-auto d-block" ng-if="movie.poster_path" 
+                 ng-src="{{SCtrl.posterBasePath + movie.poster_path}}"/>
+            <div ng-if="!movie.poster_path" class="img-not-found">No image found</div>
             <div class="mb-3 input-group" style="margin-top:5px; max-height:32px;">
                 <div class="input-group-prepend">
                     <div class="input-group-text" style="font-size:12px; max-width: 90px;">Release Date</div>
                 </div>
-                
-                <span class="form-control" style="font-size:12px;">{{movie.release_date?movie.release_date: 'N/A'}}</span>
+                <span class="form-control input-group-addon" style="font-size:12px;">{{movie.release_date?movie.release_date: 'N/A'}}</span>
             </div>
         </div>
     </div>

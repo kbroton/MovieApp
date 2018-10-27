@@ -5,9 +5,7 @@ using System.Net;
 using System.Web.Http;
 using MovieDb.Models;
 using MovieDb.Services;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
+using Newtonsoft.Json.Linq;
 
 namespace MovieDb.Controllers
 {
@@ -22,9 +20,14 @@ namespace MovieDb.Controllers
 
         [HttpGet()]
         [ActionName("SearchMovie")]
-        public List<SearchQuery> SearchMovie(string searchTerm)
+        public IHttpActionResult SearchMovie(string searchTerm = null)
         {
-            return _movieLogic.SearchMovie(searchTerm);
+            var result = _movieLogic.SearchMovie(searchTerm);
+
+            if (result.StatusCode != HttpStatusCode.OK)
+                return Content(result.StatusCode, JObject.Parse(result.Content));
+
+            return Ok(result.Data);
         }
     }
 }

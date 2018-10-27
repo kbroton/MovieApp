@@ -1,5 +1,5 @@
 ﻿(function () {
-    var app = angular.module('App', ['ngRoute']);
+    var app = angular.module('App', ['ngRoute', 'services', 'ui.bootstrap']);
 
     app.config(function ($routeProvider) {
         $routeProvider
@@ -11,7 +11,17 @@
             })
     });
 
-    app.controller('SearchCtrl', function ($scope, $http)
+    angular.module('services', []).factory('MovieData', ['$http',
+        function ($http) {
+            return {
+                // API calls here
+                SearchMovie: function (SearchTerm) {
+                    return $http.get('/api/Movie/SearchMovie?searchTerm=' + SearchTerm);
+                }
+            }
+        }]);
+
+    app.controller('SearchCtrl', function ($scope, MovieData)
     {
         // Variables
         var self = this;
@@ -22,10 +32,15 @@
 
         // Movie Search API Call
         self.searchMovie = function () {
-            $http.get('/api/Movie/SearchMovie?searchTerm=' + self.searchTerm).then(function (data) {
-                self.searchResult = data.data[0].results;
-                self.searchResult = self.searchResult.slice(0, self.numResults);
-            });
+            MovieData.SearchMovie(self.searchTerm).then(
+                function (data) {
+                    self.searchResult = data.data[0].results;
+                    self.searchResult = self.searchResult.slice(0, self.numResults);
+                }, function (data) {
+                    // Error code handeling here
+                    console.log("Failed to get movies, " + data.status + ": " + data.data.status_message)
+                }
+            );
         };
 
         // Initalize
