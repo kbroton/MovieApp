@@ -34,10 +34,11 @@
         self.searchMovie = function () {
             MovieData.SearchMovie(self.searchTerm).then(
                 function (data) {
+                    // Success response
                     self.searchResult = data.data[0].results;
                     self.searchResult = self.searchResult.slice(0, self.numResults);
                 }, function (data) {
-                    // Error code handeling here
+                    // Error response
                     console.log("Failed to get movies, " + data.status + ": " + data.data.status_message)
                 }
             );
